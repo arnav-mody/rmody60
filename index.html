@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rmody 60 · California Adventure ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange:      #F4622A;
+      --coral:       #F4845F;
+      --peach:       #FDDDD0;
+      --gold:        #F5A623;
+      --pink:        #E8527A;
+      --cream:       #FFF9F5;
+      --white:       #FFFFFF;
+      --text:        #2C1A0E;
+      --text-muted:  #7A5C48;
+      --booked-bg:   rgba(39,174,96,0.10);
+      --booked-fg:   #1E8449;
+      --tbd-bg:      rgba(160,160,160,0.15);
+      --tbd-fg:      #888;
+      --border:      #FFE5D9;
+      --shadow:      rgba(44,26,14,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ─── CONFETTI CANVAS ─── */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(150deg,
+        #1a0533 0%,
+        #6B1F7A 22%,
+        #C2185B 48%,
+        #F4622A 72%,
+        #F5A623 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 160px;
+      overflow: hidden;
+    }
+
+    .hero-stars {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-stars span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      animation: twinkle var(--d, 3s) var(--delay, 0s) ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; transform: scale(0.8); }
+      to   { opacity: 1;   transform: scale(1.2); }
+    }
+
+    .hero-wave {
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      line-height: 0;
+    }
+    .hero-wave svg { display: block; width: 100%; }
+
+    .hero-eyebrow {
+      font-size: 13px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 20px;
+      animation: fadeUp 0.9s 0.1s both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(64px, 12vw, 120px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      animation: fadeUp 0.9s 0.25s both;
+    }
+
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(22px, 4vw, 40px);
+      color: rgba(255,255,255,0.88);
+      margin-top: 10px;
+      animation: fadeUp 0.9s 0.4s both;
+    }
+
+    .hero-dates {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-top: 28px;
+      animation: fadeUp 0.9s 0.55s both;
+    }
+    .hero-dates .sep { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+
+    .hero-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+      animation: fadeUp 0.9s 0.7s both;
+    }
+    .hero-chip {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: rgba(255,255,255,0.5);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: bounce 2.2s ease-in-out infinite;
+    }
+    .scroll-hint svg { margin-top: 4px; }
+
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(8px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── STICKY NAV ─── */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 24px var(--shadow);
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      padding: 0 20px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-tab {
+      flex-shrink: 0;
+      padding: 18px 26px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: color 0.25s, border-color 0.25s;
+      user-select: none;
+    }
+    .nav-tab:hover { color: var(--orange); }
+    .nav-tab.active {
+      color: var(--orange);
+      border-bottom-color: var(--orange);
+    }
+
+    /* ─── CONTENT ─── */
+    .content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 44px 20px 100px;
+    }
+
+    .city-panel { display: none; }
+    .city-panel.active { display: block; }
+
+    /* City header */
+    .city-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .city-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px;
+      font-weight: 700;
+    }
+    .city-dates {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+    .city-stay {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--peach);
+      color: var(--orange);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 14px;
+    }
+
+    /* ─── DAY CARD ─── */
+    .day-card {
+      background: var(--white);
+      border-radius: 22px;
+      margin-bottom: 22px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px var(--shadow);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s;
+    }
+    .day-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .day-card:hover {
+      box-shadow: 0 8px 36px rgba(44,26,14,0.11);
+    }
+
+    /* Birthday card overrides */
+    .day-card.bday {
+      background: linear-gradient(135deg, #FFFBEE 0%, #FFF0F5 100%);
+      border: 2px solid #F5C842;
+      box-shadow: 0 6px 36px rgba(245,166,35,0.18);
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 26px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-card.bday .day-header {
+      background: linear-gradient(135deg,
+        rgba(245,166,35,0.10) 0%,
+        rgba(232,82,122,0.06) 100%);
+      border-bottom-color: rgba(245,166,35,0.3);
+    }
+
+    .day-num-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .day-card.bday .day-num-box {
+      background: linear-gradient(135deg, #F5A623, #F5C842);
+    }
+    .day-num-box .num { font-size: 21px; font-weight: 700; line-height: 1; }
+    .day-num-box .mon { font-size: 10px; opacity: 0.82; letter-spacing: 1px; text-transform: uppercase; }
+
+    .day-meta { flex: 1; min-width: 0; }
+    .day-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .day-card.bday .day-title { color: #9A6F00; }
+    .day-loc { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+    .bday-chip {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #F5A623, #F5C842);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 100px;
+    }
+
+    /* ─── ACTIVITIES ─── */
+    .activities { padding: 4px 0; }
+
+    .act {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 26px;
+      border-bottom: 1px solid rgba(244,98,42,0.07);
+      transition: background 0.2s;
+    }
+    .act:last-child { border-bottom: none; }
+    .act:hover { background: rgba(244,98,42,0.025); }
+
+    .act-icon {
+      font-size: 22px;
+      width: 34px;
+      text-align: center;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .act-body { flex: 1; min-width: 0; }
+
+    .act-top {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .act-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .act-time {
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--orange);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+    .badge.booked { background: var(--booked-bg); color: var(--booked-fg); }
+    .badge.tbd    { background: var(--tbd-bg);    color: var(--tbd-fg); }
+    .badge.note   { background: rgba(244,98,42,0.09); color: var(--orange); }
+    .badge.warn   { background: rgba(231,76,60,0.10); color: #C0392B; }
+
+    .act-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      line-height: 1.6;
+    }
+
+    /* ─── TRANSITION BANNER ─── */
+    .move-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #FFF5EF, #FFF1F7);
+      border: 1px dashed var(--coral);
+      border-radius: 16px;
+      margin-bottom: 22px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .move-banner.visible { opacity: 1; transform: translateY(0); }
+    .move-banner-icon { font-size: 28px; }
+    .move-banner-label { font-weight: 600; font-size: 15px; color: var(--orange); }
+    .move-banner-sub   { font-size: 13px; color: var(--text-muted); }
+
+    /* ─── BIRTHDAY HERO ─── */
+    .bday-hero {
+      text-align: center;
+      padding: 48px 24px 40px;
+      background: linear-gradient(135deg, #FFF6DA 0%, #FFE8F2 100%);
+      border-radius: 22px;
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .bday-hero.visible { opacity: 1; transform: translateY(0); }
+    .bday-hero::before {
+      content: '🎉 🎊 🎈 🎉 🎊 🎈 🎉 🎊 🎈 🎉 🎊 🎈';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      font-size: 20px;
+      letter-spacing: 6px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .bday-emoji {
+      font-size: 64px;
+      display: block;
+      animation: floatBob 3s ease-in-out infinite;
+    }
+    @keyframes floatBob {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+
+    .bday-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #D4930A, var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 14px;
+    }
+    .bday-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      text-align: center;
+      padding: 40px 20px 60px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .nav-tab { padding: 14px 18px; font-size: 14px; }
+      .day-header { padding: 16px 18px; }
+      .act { padding: 12px 18px; }
+      .day-title { font-size: 15px; }
+      .bday-chip { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-stars" id="hero-stars"></div>
+
+  <p class="hero-eyebrow">A family celebration · May 2026</p>
+  <h1 class="hero-title">Rmody 60</h1>
+  <p class="hero-sub">California Adventure</p>
+
+  <div class="hero-dates">
+    <span>May 21</span>
+    <span class="sep"></span>
+    <span>May 31, 2026</span>
+  </div>
+
+  <div class="hero-chips">
+    <span class="hero-chip">🌴 Los Angeles</span>
+    <span class="hero-chip">🌊 San Diego</span>
+    <span class="hero-chip">🍷 Santa Barbara</span>
+  </div>
+
+  <div class="scroll-hint">
+    scroll
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 3v10M3 8l5 5 5-5" stroke="rgba(255,255,255,0.55)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#FFF9F5"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     STICKY NAV
+═══════════════════════════════════════ -->
+<nav class="sticky-nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-city="la"  onclick="switchCity('la')">🌴 Los Angeles</div>
+    <div class="nav-tab"        data-city="sd"  onclick="switchCity('sd')">🌊 San Diego</div>
+    <div class="nav-tab"        data-city="sb"  onclick="switchCity('sb')">🍷 Santa Barbara</div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════ -->
+<div class="content">
+
+  <!-- ══════════════════
+       LOS ANGELES
+  ══════════════════ -->
+  <div class="city-panel active" id="panel-la">
+    <div class="city-header">
+      <div class="city-name">Los Angeles 🌴</div>
+      <div class="city-dates">May 21–23 &amp; May 29–31</div>
+      <div><span class="city-stay">🏨 Eden Santa Monica → SLS Beverly Hills</span></div>
+    </div>
+
+    <!-- May 21 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">21</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Thursday · Arrival Day</div>
+          <div class="day-loc">📍 Santa Monica</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">✈️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Everyone arrives in Los Angeles</span></div>
+            <div class="act-note">Check in to Eden Santa Monica. Settle in, explore the neighborhood, decompress from travel — the adventure begins!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 22 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">22</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Friday · Santa Monica &amp; Brentwood</div>
+          <div class="day-loc">📍 Los Angeles</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Brunch at Farmshop · Brentwood Country Mart</span>
+              <span class="act-time">~9am</span>
+            </div>
+            <div class="act-note">Beloved brunch spot inside the charming open-air Brentwood Country Mart. A great first LA morning.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🥾</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Griffith Observatory Hike</span></div>
+            <div class="act-note">Iconic LA hike with sweeping city and Hollywood Sign views. About a 1-hour drive from Santa Monica.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🌅</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Drinks &amp; Dinner at <a href="https://www.tripadvisor.com/Restaurant_Review-g33052-d14925395-Reviews-Elephante-Santa_Monica_California.html" target="_blank">Elephante ↗</a></span>
+              <span class="act-time">5:45pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 5:45pm</span></div>
+            <div class="act-note">Vibey rooftop restaurant right on the Santa Monica bluffs. Influencer-central — but the food and views are genuinely great. Arnav has been and loves it.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍸</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Nightcap at Hotel Cafe or Bar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 23 (LA portion) -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">23</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Saturday · Venice, Museum &amp; Drive South</div>
+          <div class="day-loc">📍 Los Angeles → San Diego</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🌊</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Morning Pier Walk / Run</span></div>
+            <div class="act-note">Start the day with a stroll or jog along the Santa Monica Pier waterfront.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Brunch at <a href="https://www.greatwhite.cafe/menu" target="_blank">Great White Cafe ↗</a> · Venice Beach</span></div>
+            <div class="badges"><span class="badge note">Walk-in only</span></div>
+            <div class="act-note">If the wait is too long, Le Grand Outdoor nearby is also a great option.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🏛️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Museum · LACMA or Getty</span></div>
+            <div class="badges"><span class="badge tbd">TBD</span></div>
+            <div class="act-note">Both are very different experiences — LACMA is more eclectic &amp; unique; the Getty has stunning architecture and views. Factor in leaving early enough for the 2–3 hr drive to San Diego.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚗</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Drive to San Diego</span></div>
+            <div class="act-note">~2–3 hours depending on traffic. Leave early to beat it! Option to take the scenic coastal route and stop for dinner along the way, or arrive in SD and eat there.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bridge banner -->
+    <div class="move-banner">
+      <span class="move-banner-icon">🌊&nbsp;🍷</span>
+      <div>
+        <div class="move-banner-label">May 23–28 · San Diego &amp; Santa Barbara</div>
+        <div class="move-banner-sub">Flip to those tabs above to see what's planned ↑</div>
+      </div>
+    </div>
+
+    <!-- May 29 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">29</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Friday · Back to LA</div>
+          <div class="day-loc">📍 Santa Barbara → Los Angeles</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🚗</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Drive back to LA along the coast</span></div>
+            <div class="act-note">Scenic Pacific Coast Highway drive through Ventura — one of the prettiest stretches of road in California.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Lunch stop in Ventura</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🥂</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Check in to SLS Beverly Hills · Rooftop Drinks</span></div>
+            <div class="act-note">Drop luggage and kick off the birthday weekend with rooftop cocktails at SLS.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🌮</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Dinner · Tacos</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🎵</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Live Music at Hotel Cafe</span></div>
+            <div class="act-note">Intimate, legendary live music venue in Hollywood. A perfect low-key way to close out the night before the big day.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Birthday hero banner -->
+    <div class="bday-hero" id="bday-hero">
+      <span class="bday-emoji">🎂</span>
+      <div class="bday-title">Happy 60th, Roopal!</div>
+      <div class="bday-sub">The whole trip has been building to this. Today is yours. 🥂</div>
+    </div>
+
+    <!-- May 30 — BIRTHDAY -->
+    <div class="day-card bday" id="bday-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">30</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Saturday · Mom's 60th Birthday 🎉</div>
+          <div class="day-loc">📍 Beverly Hills &amp; Los Angeles</div>
+        </div>
+        <span class="bday-chip">🎂 THE Day!</span>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🌹</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Birthday Brunch at <a href="https://www.dorchestercollection.com/los-angeles/the-beverly-hills-hotel/dining/polo-lounge" target="_blank">The Polo Lounge ↗</a> · Beverly Hills Hotel</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked</span></div>
+            <div class="act-note">The legendary pink-and-green Polo Lounge at the Beverly Hills Hotel — as iconic as Los Angeles gets. <a href="https://cms.dorchestercollection.com/media/1xrfnft3/the-beverly-hills-hotel-polo-lounge-brunch-sample-menu.pdf" target="_blank">View brunch menu →</a></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🛍️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Rodeo Drive &amp; Wilshire Blvd Walk</span></div>
+            <div class="act-note">Walk up La Cienega to Wilshire then cut to Rodeo Drive — iconic window shopping. Continue down to Beverly Drive and Canon Drive for charming boutiques and cafés. Very walkable: flat, manicured, beautiful.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🎨</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Melrose Avenue Walk</span></div>
+            <div class="act-note">Short drive from SLS to the stretch between La Cienega and Fairfax. Independent boutiques, street murals (the famous Paul Smith pink wall!), and great cafés. Eclectic, artsy — a completely different energy from Rodeo.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚗</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Beverly Hills Drive &amp; Greystone Mansion</span></div>
+            <div class="act-note">Scenic drive through the hills. Stop at the gorgeous Greystone Mansion &amp; Gardens (free entry). Options: Mulholland Drive for the best views, Benedict Canyon for "old LA" mansion vibes, Canon Drive for leafy charm.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🥂</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Birthday Cocktails at <a href="https://www.hilton.com/en/hotels/laxwawa-waldorf-astoria-beverly-hills/dining/the-rooftop-beverly-hills/" target="_blank">Gemma · Waldorf Astoria Rooftop ↗</a></span>
+              <span class="act-time">5:30pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 5:30pm</span></div>
+            <div class="act-note">Stunning rooftop bar atop the Waldorf Astoria Beverly Hills. Sunset cocktails on the birthday — it doesn't get better.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Birthday Dinner at <a href="https://www.ilcielo.com/menus/#dinner" target="_blank">Il Cielo · Beverly Hills ↗</a></span>
+              <span class="act-time">8pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 8:00pm</span></div>
+            <div class="act-note">The grand finale — a beautiful Italian restaurant with a magical garden setting. The perfect birthday dinner.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 31 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">31</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Sunday · Last Morning &amp; Fly Home</div>
+          <div class="day-loc">📍 Los Angeles → New York</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Farewell Brunch at <a href="https://www.nuabeverlyhills.com/menus/#dinner" target="_blank">Nua Beverly Hills ↗</a></span>
+              <span class="act-time">11am</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 11:00am</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🕐</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Free Time / Activity</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">✈️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Fly home to New York</span></div>
+            <div class="act-note">Until next time, California 🌅</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /panel-la -->
+
+
+  <!-- ══════════════════
+       SAN DIEGO
+  ══════════════════ -->
+  <div class="city-panel" id="panel-sd">
+    <div class="city-header">
+      <div class="city-name">San Diego 🌊</div>
+      <div class="city-dates">May 23–26</div>
+      <div><span class="city-stay">🏨 Alma Hotel</span></div>
+    </div>
+
+    <!-- May 23 (SD arrival) -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">23</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Saturday · Arrive San Diego</div>
+          <div class="day-loc">📍 Driving in from Los Angeles</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🌮</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Lunch at The Taco Stand</span></div>
+            <div class="badges"><span class="badge note">No reservation needed</span></div>
+            <div class="act-note">Very close to the hotel. A perfect first taste of San Diego.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🌿</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Balboa Park</span></div>
+            <div class="act-note">Explore the Spanish Art Village and the Rose Garden. Stunning grounds — great for an afternoon stroll after the drive.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍺</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Happy Hour at Artifact at Mingei</span>
+              <span class="act-time">3pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 3:00pm</span></div>
+            <div class="act-note">Cocktail bar inside the Mingei International Museum in Balboa Park. Have drinks, then continue walking the park after.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Dinner at Sovereign Modern Thai Cuisine</span>
+              <span class="act-time">8:15pm</span>
+            </div>
+            <div class="badges">
+              <span class="badge booked">✓ Booked · 8:15pm</span>
+              <span class="badge warn">⚠ Cancel 1 day ahead to avoid $20/person fee</span>
+            </div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🌆</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">After-dinner stroll · Gaslamp Quarter</span></div>
+            <div class="act-note">San Diego's lively historic nightlife district with Victorian architecture, bars and restaurants.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 24 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">24</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Sunday · Seaport Village &amp; Little Italy</div>
+          <div class="day-loc">📍 San Diego</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🌅</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Morning walk around Seaport Village</span></div>
+            <div class="act-note">Charming waterfront shopping village with beautiful bay views — a lovely way to start the day.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Lunch</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">⚓</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Maritime Museum</span></div>
+            <div class="badges"><span class="badge note">Walk-up tickets available</span></div>
+            <div class="act-note">Home to the oldest active sailing ship in the US. Great for history lovers.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍕</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Walk around Little Italy</span></div>
+            <div class="act-note">One of San Diego's best neighborhoods — great food, murals, and a vibrant Italian-American vibe.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Dinner at Tahona</span>
+              <span class="act-time">7:30pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 7:30pm</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍹</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Late Drinks at Occulto 477</span>
+              <span class="act-time">9:30pm</span>
+            </div>
+            <div class="badges">
+              <span class="badge booked">✓ Booked · 9:30pm</span>
+              <span class="badge warn">⚠ Cancel 24 hrs ahead to avoid $25/person fee</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 25 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">25</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Monday · La Jolla &amp; Kayaking</div>
+          <div class="day-loc">📍 San Diego / La Jolla</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🥐</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Morning Bakery Run · Izzola or Relic Bakery</span></div>
+            <div class="badges"><span class="badge note">Pre-order online</span></div>
+            <div class="act-note">Grab pastries from one of these excellent local bakeries to start the day right.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🌊</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Coast Walk Trail</span></div>
+            <div class="act-note">Scenic coastal trail with stunning Pacific Ocean views. Perfect morning walk.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Lunch at Georges at the Cove</span>
+              <span class="act-time">12pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 12:00pm</span></div>
+            <div class="act-note">Iconic La Jolla restaurant with spectacular views over the Pacific. A classic.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚣</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Kayaking with Everyday Kayak · 90 minutes</span>
+              <span class="act-time">1:30pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Check in 1:30pm</span></div>
+            <div class="act-note">Ask for <strong>Chris Gables</strong> (Fendi's friend). Confirm or change by Saturday if needed. Paddling along the La Jolla sea caves is breathtaking.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🦭</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Walk around La Jolla Village</span></div>
+            <div class="act-note">Stroll the charming village, see the seals at Children's Pool, and soak in the coastal views.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍷</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Drinks &amp; Dinner</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 26 — drive day (SD morning) -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">26</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Tuesday · Last Morning &amp; Drive to Santa Barbara</div>
+          <div class="day-loc">📍 San Diego → Santa Barbara</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Breakfast in San Diego</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+            <div class="act-note">One last San Diego morning before hitting the road north.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚗</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Drive to Santa Barbara</span></div>
+            <div class="act-note">The full California coast experience — drive through LA and north up the 101. See the Santa Barbara tab for everything planned there!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /panel-sd -->
+
+
+  <!-- ══════════════════
+       SANTA BARBARA
+  ══════════════════ -->
+  <div class="city-panel" id="panel-sb">
+    <div class="city-header">
+      <div class="city-name">Santa Barbara 🍷</div>
+      <div class="city-dates">May 26–29</div>
+      <div><span class="city-stay">🏡 Private Airbnb</span></div>
+    </div>
+
+    <!-- May 26 (SB arrival) -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">26</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Tuesday · Arrive Santa Barbara</div>
+          <div class="day-loc">📍 Driving up from San Diego</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🦋</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name"><a href="https://santabarbaraca.com/events/butterflies-alive/" target="_blank">Butterflies Alive! Exhibit ↗</a> · Museum of Natural History</span></div>
+            <div class="act-note">Walk through a living butterfly pavilion — a beautiful, immersive and memorable experience. Perfect first stop after arriving in Santa Barbara.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Dinner</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍸</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Bars</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 27 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">27</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Wednesday · Walking Tour, Wharf &amp; Dancing</div>
+          <div class="day-loc">📍 Santa Barbara</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🏛️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Santa Barbara Walking Tour · State Street</span>
+              <span class="act-time">10am</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked</span></div>
+            <div class="act-note">Sullivan's 2-hour tour starts at the south entrance of Paseo Nuevo Mall, 715 State St. Covers the Courthouse, Casa de la Guerra, the historic core, and the earthquake rebuild story. Climb the clock tower for panoramic views of the city and ocean. Walkable from the Airbnb (~15 min on foot).</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Brunch at <a href="https://boathousesb.com/menu" target="_blank">Boathouse ↗</a> · Hendry's Beach</span></div>
+            <div class="badges"><span class="badge note">No booking needed</span></div>
+            <div class="act-note">Brunch right on Hendry's Beach — fresh seafood and great ocean views.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚢</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Stearns Wharf Stroll</span></div>
+            <div class="act-note">Walk down from the Funk Zone to the wharf for golden hour. Just 8 minutes on foot from the Airbnb. Watch the pelicans, browse shops, take family photos with the harbor views stretching out behind you.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">💃</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name"><a href="https://santabarbaraca.com/events/downtown-kickin-country-line-dancing/" target="_blank">Free Line Dancing Lesson! ↗</a></span>
+              <span class="act-time">6pm – 8pm</span>
+            </div>
+            <div class="act-note">Downtown Kickin' Country at 716 State St. Free and open to everyone — one of those only-in-SB experiences. Might be the highlight of the whole trip!</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Dinner</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 28 -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">28</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Thursday · Wine Country Day Trip</div>
+          <div class="day-loc">📍 Solvang · Santa Ynez Valley · Los Olivos</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">🏘️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Solvang Town Visit</span></div>
+            <div class="act-note">Delightfully quirky Danish-style village in the valley. Walk around, check out a bakery — a fun contrast to everything else on the trip.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍷</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Wine Tasting at <a href="https://beckmenvineyards.com/" target="_blank">Beckman Vineyards ↗</a></span>
+              <span class="act-time">11:30am</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 11:30am</span></div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🫒</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Olive Oil Tasting at <a href="https://olivehillfarm.com/pages/olive-oil-tasting" target="_blank">Olive Hill Farms ↗</a></span></div>
+            <div class="badges"><span class="badge note">No booking needed</span></div>
+            <div class="act-note">A fun detour between vineyards — sample estate-grown, small-batch olive oils.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Lunch at <a href="https://industrialeats.com/menu/" target="_blank">Industrial Eats ↗</a></span></div>
+            <div class="act-note">Acclaimed, casual restaurant in Buellton — great wood-fired food right in the heart of wine country.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍷</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Wine Tasting at <a href="https://sunstonewinery.com/" target="_blank">Sunstone Winery ↗</a></span>
+              <span class="act-time">3:30pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 3:30pm</span></div>
+            <div class="act-note">Stunning Provençal-style estate winery in the Santa Ynez Valley — gorgeous grounds to explore between tastings.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🍽️</div>
+          <div class="act-body">
+            <div class="act-top">
+              <span class="act-name">Dinner at <a href="http://loquita.com" target="_blank">Loquita ↗</a> · Santa Barbara</span>
+              <span class="act-time">7:30pm</span>
+            </div>
+            <div class="badges"><span class="badge booked">✓ Booked · 7:30pm</span></div>
+            <div class="act-note">Spanish-inspired restaurant in downtown Santa Barbara. A wonderful ending to a full wine country day.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- May 29 SB departure -->
+    <div class="day-card">
+      <div class="day-header">
+        <div class="day-num-box"><span class="num">29</span><span class="mon">May</span></div>
+        <div class="day-meta">
+          <div class="day-title">Friday · Farewell Santa Barbara</div>
+          <div class="day-loc">📍 Santa Barbara → Los Angeles</div>
+        </div>
+      </div>
+      <div class="activities">
+        <div class="act">
+          <div class="act-icon">☕</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Breakfast</span></div>
+            <div class="badges"><span class="badge tbd">We'll figure!</span></div>
+            <div class="act-note">One last Santa Barbara morning before hitting the road south.</div>
+          </div>
+        </div>
+        <div class="act">
+          <div class="act-icon">🚗</div>
+          <div class="act-body">
+            <div class="act-top"><span class="act-name">Drive to LA via the Pacific Coast Highway</span></div>
+            <div class="act-note">One of the most beautiful drives in the country — cruise through Ventura with a lunch stop along the way. See the Los Angeles tab for everything planned for Friday evening!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /panel-sb -->
+
+</div><!-- /content -->
+
+<div class="footer">
+  Made with ❤️ for Roopal's 60th &nbsp;·&nbsp; California, May 2026
+</div>
+
+
+<script>
+// ─── HERO STARS ───
+(function() {
+  const container = document.getElementById('hero-stars');
+  for (let i = 0; i < 55; i++) {
+    const s = document.createElement('span');
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      --d:${(Math.random()*3+2).toFixed(1)}s;
+      --delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    container.appendChild(s);
+  }
+})();
+
+// ─── CITY TAB SWITCHING ───
+function switchCity(city) {
+  document.querySelectorAll('.city-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + city).classList.add('active');
+  document.querySelector('[data-city="' + city + '"]').classList.add('active');
+
+  // Scroll to nav
+  const nav = document.querySelector('.sticky-nav');
+  const navTop = nav.getBoundingClientRect().top + window.scrollY - 1;
+  window.scrollTo({ top: navTop, behavior: 'smooth' });
+
+  // Re-trigger animations for newly visible cards
+  requestAnimationFrame(() => observeCards());
+
+  // Check bday visibility if on LA panel
+  if (city === 'la') {
+    setTimeout(checkBdayVisible, 600);
+  }
+}
+
+// ─── SCROLL ANIMATIONS ───
+function observeCards() {
+  const items = document.querySelectorAll(
+    '.city-panel.active .day-card, .city-panel.active .move-banner, .city-panel.active .bday-hero'
+  );
+  items.forEach((el, i) => {
+    if (!el.classList.contains('visible')) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 40) {
+        setTimeout(() => el.classList.add('visible'), i * 70);
+      }
+    }
+  });
+}
+
+const scrollObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      scrollObserver.unobserve(entry.target);
+    }
+  });
+}, { rootMargin: '0px 0px -40px 0px' });
+
+function attachObserver() {
+  document.querySelectorAll('.day-card, .move-banner, .bday-hero').forEach(el => {
+    scrollObserver.observe(el);
+  });
+}
+attachObserver();
+
+// ─── CONFETTI ───
+const canvas = document.getElementById('confetti-canvas');
+const ctx = canvas.getContext('2d');
+let W = canvas.width  = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+});
+
+const COLORS = ['#F4622A','#F5A623','#E8527A','#8B4FC8','#27AE60','#FFD700','#F4845F','#5B9CF6'];
+let pieces = [];
+let animId = null;
+let confettiFired = false;
+
+function spawnConfetti() {
+  for (let i = 0; i < 180; i++) {
+    pieces.push({
+      x:     Math.random() * W,
+      y:     -10 - Math.random() * 120,
+      w:     Math.random() * 10 + 4,
+      h:     Math.random() * 5  + 3,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      vy:    Math.random() * 3.5 + 1.5,
+      vx:    (Math.random() - 0.5) * 2.5,
+      angle: Math.random() * Math.PI * 2,
+      spin:  (Math.random() - 0.5) * 0.18,
+      alpha: 1,
+    });
+  }
+}
+
+function drawConfetti() {
+  ctx.clearRect(0, 0, W, H);
+  let alive = false;
+  pieces.forEach(p => {
+    p.y     += p.vy;
+    p.x     += p.vx;
+    p.angle += p.spin;
+    if (p.y > H * 0.7) p.alpha -= 0.018;
+    if (p.alpha <= 0 || p.y > H + 20) return;
+    alive = true;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.angle);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    ctx.restore();
+  });
+  pieces = pieces.filter(p => p.alpha > 0 && p.y < H + 20);
+  if (alive) {
+    animId = requestAnimationFrame(drawConfetti);
+  } else {
+    ctx.clearRect(0, 0, W, H);
+    animId = null;
+  }
+}
+
+function fireConfetti() {
+  if (confettiFired) return;
+  confettiFired = true;
+  spawnConfetti();
+  if (!animId) drawConfetti();
+  // Second burst after a moment
+  setTimeout(() => { spawnConfetti(); }, 800);
+}
+
+function checkBdayVisible() {
+  if (confettiFired) return;
+  const hero = document.getElementById('bday-hero');
+  if (!hero) return;
+  const rect = hero.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    fireConfetti();
+  }
+}
+
+window.addEventListener('scroll', () => {
+  observeCards();
+  if (document.getElementById('panel-la').classList.contains('active')) {
+    checkBdayVisible();
+  }
+}, { passive: true });
+
+// Initial check on load
+setTimeout(() => {
+  observeCards();
+  checkBdayVisible();
+}, 300);
+</script>
+</body>
+</html>
