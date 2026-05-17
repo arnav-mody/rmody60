@@ -299,13 +299,8 @@
     .bday-sub { font-size: 16px; color: var(--text-muted); margin-top: 10px; }
 
     /* ─── WISHES SECTION ─── */
-    .wishes-section {
-      background: linear-gradient(135deg, #FFF5EF 0%, #FFF1F8 100%);
-      padding: 70px 20px 90px;
-      border-top: 1px solid var(--border);
-    }
     .wishes-inner { max-width: 960px; margin: 0 auto; }
-    .wishes-heading { text-align: center; margin-bottom: 44px; }
+    .wishes-heading { text-align: center; margin-bottom: 44px; padding-top: 12px; }
     .wishes-heading h2 {
       font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--text);
     }
@@ -457,9 +452,10 @@
 ═══════════════════════════════════════ -->
 <nav class="sticky-nav">
   <div class="nav-inner">
-    <div class="nav-tab active" data-city="la" onclick="switchCity('la')">🌴 Los Angeles</div>
-    <div class="nav-tab"        data-city="sd" onclick="switchCity('sd')">🌊 San Diego</div>
-    <div class="nav-tab"        data-city="sb" onclick="switchCity('sb')">🍷 Santa Barbara</div>
+    <div class="nav-tab active" data-city="la"     onclick="switchCity('la')">🌴 Los Angeles</div>
+    <div class="nav-tab"        data-city="sd"     onclick="switchCity('sd')">🌊 San Diego</div>
+    <div class="nav-tab"        data-city="sb"     onclick="switchCity('sb')">🍷 Santa Barbara</div>
+    <div class="nav-tab"        data-city="wishes" onclick="switchCity('wishes')">💌 Wishes</div>
   </div>
 </nav>
 
@@ -1176,67 +1172,49 @@
     </div>
   </div><!-- /panel-sb -->
 
+  <!-- ══════════════════  WISHES  ══════════════════ -->
+  <div class="city-panel" id="panel-wishes">
+    <div class="wishes-inner">
+
+      <div class="wishes-heading">
+        <h2>Wishes &amp; Travel Tips 💌</h2>
+        <p>Share a birthday wish for Roopal, or a tip for the trip!</p>
+      </div>
+
+      <div class="firebase-notice" id="firebase-notice">
+        <strong>⚙️ One-time setup needed to activate wishes:</strong><br>
+        Arnav — paste your Firebase config into the <code>firebaseConfig</code> object in the HTML source,
+        then delete this notice box. Takes ~5 minutes.
+        Instructions are in the HTML comments above <code>id="wishes-section"</code>.
+      </div>
+
+      <!-- Wish submission form -->
+      <div class="wish-form">
+        <div class="wish-form-title">Leave a message 🌟</div>
+        <div class="wish-field">
+          <label for="wish-name">Your name</label>
+          <input type="text" id="wish-name" placeholder="e.g. Priya" maxlength="60" />
+        </div>
+        <div class="wish-field">
+          <label for="wish-msg">Your wish or travel tip</label>
+          <textarea id="wish-msg" placeholder="Happy birthday Roopal! Don't miss the sunset from Stearns Wharf…" maxlength="500"></textarea>
+        </div>
+        <button class="wish-submit" id="wish-submit" onclick="submitWish()">Send it ✨</button>
+        <div class="wish-success" id="wish-success">🎉 Thank you! Your message is now on the board.</div>
+      </div>
+
+      <!-- Wishes display -->
+      <div class="wishes-grid-label">From everyone who loves you 🧡</div>
+      <div id="wishes-loading" class="wishes-loading">Loading messages…</div>
+      <div id="wishes-grid" class="wishes-grid"></div>
+      <div id="wishes-empty" class="wishes-empty" style="display:none">
+        No messages yet — be the first! 🌟
+      </div>
+
+    </div>
+  </div><!-- /panel-wishes -->
+
 </div><!-- /content -->
-
-
-<!-- ═══════════════════════════════════════
-     WISHES & TRAVEL TIPS
-═══════════════════════════════════════ -->
-<section class="wishes-section" id="wishes-section">
-  <div class="wishes-inner">
-
-    <div class="wishes-heading">
-      <h2>Wishes &amp; Travel Tips 💌</h2>
-      <p>Share a birthday wish for Roopal, or a tip for the trip!</p>
-    </div>
-
-    <!--
-    ══════════════════════════════════════════════════════
-    FIREBASE SETUP — do this once before sharing the site:
-
-    1. Go to https://console.firebase.google.com
-    2. Click "Add project" → name it rmody60 → Continue
-    3. Disable Google Analytics (optional) → Create project
-    4. Click the </> (Web) icon → Register app → name it rmody60
-    5. Copy the firebaseConfig object from the snippet shown
-    6. Paste it below, replacing the placeholder values
-    7. In the left sidebar go to Build → Firestore Database
-    8. Click "Create database" → Start in test mode → Next → Enable
-    9. That's it! The wishes feature will be live.
-    ══════════════════════════════════════════════════════
-    -->
-    <div class="firebase-notice" id="firebase-notice">
-      <strong>⚙️ One-time setup needed to activate wishes:</strong><br>
-      Arnav — paste your Firebase config into the <code>firebaseConfig</code> object in the HTML source,
-      then delete this notice box. Takes ~5 minutes.
-      Instructions are in the HTML comments above <code>id="wishes-section"</code>.
-    </div>
-
-    <!-- Wish submission form -->
-    <div class="wish-form">
-      <div class="wish-form-title">Leave a message 🌟</div>
-      <div class="wish-field">
-        <label for="wish-name">Your name</label>
-        <input type="text" id="wish-name" placeholder="e.g. Priya" maxlength="60" />
-      </div>
-      <div class="wish-field">
-        <label for="wish-msg">Your wish or travel tip</label>
-        <textarea id="wish-msg" placeholder="Happy birthday Roopal! Don't miss the sunset from Stearns Wharf…" maxlength="500"></textarea>
-      </div>
-      <button class="wish-submit" id="wish-submit" onclick="submitWish()">Send it ✨</button>
-      <div class="wish-success" id="wish-success">🎉 Thank you! Your message is now on the board.</div>
-    </div>
-
-    <!-- Wishes display -->
-    <div class="wishes-grid-label">From everyone who loves you 🧡</div>
-    <div id="wishes-loading" class="wishes-loading">Loading messages…</div>
-    <div id="wishes-grid" class="wishes-grid"></div>
-    <div id="wishes-empty" class="wishes-empty" style="display:none">
-      No messages yet — be the first! 🌟
-    </div>
-
-  </div>
-</section>
 
 <div class="footer">
   Made with ❤️ for Roopal's 60th &nbsp;·&nbsp; California, May 2026
@@ -1425,7 +1403,7 @@ function goToToday() {
 
 // ─── GO TO WISHES SECTION ───
 function goToWishes() {
-  document.getElementById('wishes-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  switchCity('wishes');
 }
 
 
