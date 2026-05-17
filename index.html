@@ -39,7 +39,7 @@
     .hero {
       position: relative;
       min-height: 100vh;
-      background-image: url('./family.jpg');
+      background-image: url('./family_desktop.jpg');
       background-size: cover;
       background-position: center 25%;
       display: flex;
@@ -390,6 +390,7 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 600px) {
+      .hero { background-image: url('./family_mobile.jpg'); }
       .nav-tab { padding: 14px 18px; font-size: 14px; }
       .day-header { padding: 16px 18px; }
       .act { padding: 12px 18px; }
@@ -1253,12 +1254,12 @@
 // FIREBASE CONFIG — paste your values here
 // ══════════════════════════════════════════════
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
-  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId:         "YOUR_PROJECT_ID",
-  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  apiKey:            "AIzaSyDuENfBLEh2tf6pGT1fJNAiXjBZ4HOGwEY",
+  authDomain:        "rmody60.firebaseapp.com",
+  projectId:         "rmody60",
+  storageBucket:     "rmody60.firebasestorage.app",
+  messagingSenderId: "471639989962",
+  appId:             "1:471639989962:web:51471d26eb81052e095e33"
 };
 
 // Detect whether Firebase has been configured
@@ -1406,14 +1407,12 @@ function goToToday() {
   const entry = dayMap[key];
 
   if (!entry) {
-    const tripStart = new Date('2026-05-21');
-    const tripEnd   = new Date('2026-05-31');
-    if (now < tripStart) {
-      const days = Math.ceil((tripStart - now) / 86400000);
-      alert(`The adventure begins in ${days} day${days !== 1 ? 's' : ''}! 🌅`);
-    } else {
-      alert('What an incredible trip! The memories last forever. 🌟');
-    }
+    // Outside trip dates — default to the first day
+    switchCity('la');
+    setTimeout(() => {
+      const el = document.getElementById('day-21');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
     return;
   }
 
