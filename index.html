@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rmody 60 · California Adventure ✨</title>
+  <title>Roopal Turns 60! 🎂</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -25,40 +25,23 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
     a { color: var(--orange); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     /* ─── CONFETTI CANVAS ─── */
     #confetti-canvas {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      width: 100%;
-      height: 100%;
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999; width: 100%; height: 100%;
     }
 
     /* ─── HERO ─── */
     .hero {
       position: relative;
       min-height: 100vh;
-      background: linear-gradient(150deg,
-        #1a0533 0%,
-        #6B1F7A 22%,
-        #C2185B 48%,
-        #F4622A 72%,
-        #F5A623 100%
-      );
+      background-image: url('./family.jpg');
+      background-size: cover;
+      background-position: center 25%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -67,213 +50,158 @@
       padding: 60px 24px 160px;
       overflow: hidden;
     }
-
-    .hero-stars {
+    /* Gradient overlay on top of photo */
+    .hero::before {
+      content: '';
       position: absolute;
       inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .hero-stars span {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      animation: twinkle var(--d, 3s) var(--delay, 0s) ease-in-out infinite alternate;
+      z-index: 0;
+      background: linear-gradient(150deg,
+        rgba(26,5,51,0.82) 0%,
+        rgba(107,31,122,0.76) 22%,
+        rgba(194,24,91,0.70) 48%,
+        rgba(244,98,42,0.65) 72%,
+        rgba(245,166,35,0.72) 100%
+      );
     }
 
+    .hero-stars {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1;
+    }
+    .hero-stars span {
+      position: absolute; border-radius: 50%; background: rgba(255,255,255,0.6);
+      animation: twinkle var(--d, 3s) var(--delay, 0s) ease-in-out infinite alternate;
+    }
     @keyframes twinkle {
       from { opacity: 0.2; transform: scale(0.8); }
       to   { opacity: 1;   transform: scale(1.2); }
     }
 
-    .hero-wave {
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      right: 0;
-      line-height: 0;
-    }
-    .hero-wave svg { display: block; width: 100%; }
-
-    .hero-eyebrow {
-      font-size: 13px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 20px;
-      animation: fadeUp 0.9s 0.1s both;
-    }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(64px, 12vw, 120px);
-      font-weight: 700;
-      color: #fff;
-      line-height: 1;
-      animation: fadeUp 0.9s 0.25s both;
-    }
-
-    .hero-sub {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: clamp(22px, 4vw, 40px);
-      color: rgba(255,255,255,0.88);
-      margin-top: 10px;
-      animation: fadeUp 0.9s 0.4s both;
-    }
-
-    .hero-dates {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      color: rgba(255,255,255,0.75);
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      margin-top: 28px;
-      animation: fadeUp 0.9s 0.55s both;
-    }
-    .hero-dates .sep { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; }
-
-    .hero-chips {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 30px;
-      animation: fadeUp 0.9s 0.7s both;
-    }
-    .hero-chip {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.28);
-      color: #fff;
-      padding: 8px 22px;
-      border-radius: 100px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 110px;
+    /* All hero content sits above the overlay */
+    .hero-content {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      color: rgba(255,255,255,0.5);
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
+    }
+
+    .hero-wave {
+      position: absolute; bottom: -2px; left: 0; right: 0; line-height: 0; z-index: 2;
+    }
+    .hero-wave svg { display: block; width: 100%; }
+
+    .scroll-hint {
+      position: absolute; bottom: 110px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
       animation: bounce 2.2s ease-in-out infinite;
     }
     .scroll-hint svg { margin-top: 4px; }
 
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(8px); }
+    .hero-eyebrow {
+      font-size: 13px; letter-spacing: 5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); margin-bottom: 20px;
+      animation: fadeUp 0.9s 0.1s both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(64px, 12vw, 120px); font-weight: 700; color: #fff; line-height: 1;
+      animation: fadeUp 0.9s 0.25s both;
+    }
+    .hero-sub {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: clamp(22px, 4vw, 40px); color: rgba(255,255,255,0.88); margin-top: 10px;
+      animation: fadeUp 0.9s 0.4s both;
+    }
+    .hero-dates {
+      display: flex; align-items: center; gap: 14px;
+      color: rgba(255,255,255,0.75); font-size: 15px; font-weight: 500; letter-spacing: 1px;
+      margin-top: 28px; animation: fadeUp 0.9s 0.55s both;
+    }
+    .hero-dates .sep { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+
+    /* Clickable city chips */
+    .hero-chips {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      margin-top: 30px; animation: fadeUp 0.9s 0.7s both;
+    }
+    .hero-chip {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.28); color: #fff;
+      padding: 8px 22px; border-radius: 100px; font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+      user-select: none;
+    }
+    .hero-chip:hover { background: rgba(255,255,255,0.28); transform: translateY(-2px); }
+    .hero-chip:active { transform: translateY(0); }
+
+    /* Hero action buttons */
+    .hero-actions {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      margin-top: 24px; animation: fadeUp 0.9s 0.85s both;
+    }
+    .hero-btn {
+      padding: 13px 26px; border-radius: 100px; font-size: 14px; font-weight: 600;
+      cursor: pointer; border: none; font-family: 'Inter', sans-serif;
+      transition: transform 0.2s, opacity 0.2s; letter-spacing: 0.2px;
+    }
+    .hero-btn:hover { transform: translateY(-2px); opacity: 0.92; }
+    .hero-btn:active { transform: translateY(0); }
+    .hero-btn-today {
+      background: rgba(255,255,255,0.95); color: var(--orange);
+    }
+    .hero-btn-wish {
+      background: linear-gradient(135deg, var(--pink) 0%, #C2185B 100%);
+      color: #fff; border: 1px solid rgba(255,255,255,0.25);
     }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    @keyframes fadeUp  { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
 
     /* ─── STICKY NAV ─── */
     .sticky-nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 200;
+      background: var(--white); border-bottom: 1px solid var(--border);
       box-shadow: 0 2px 24px var(--shadow);
     }
-
     .nav-inner {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      padding: 0 20px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      max-width: 960px; margin: 0 auto; display: flex;
+      padding: 0 20px; overflow-x: auto; scrollbar-width: none;
     }
     .nav-inner::-webkit-scrollbar { display: none; }
-
     .nav-tab {
-      flex-shrink: 0;
-      padding: 18px 26px;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-muted);
-      border-bottom: 3px solid transparent;
-      cursor: pointer;
-      transition: color 0.25s, border-color 0.25s;
-      user-select: none;
+      flex-shrink: 0; padding: 18px 26px; font-size: 15px; font-weight: 500;
+      color: var(--text-muted); border-bottom: 3px solid transparent;
+      cursor: pointer; transition: color 0.25s, border-color 0.25s; user-select: none;
     }
     .nav-tab:hover { color: var(--orange); }
-    .nav-tab.active {
-      color: var(--orange);
-      border-bottom-color: var(--orange);
-    }
+    .nav-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
 
     /* ─── CONTENT ─── */
-    .content {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 44px 20px 100px;
-    }
-
+    .content { max-width: 960px; margin: 0 auto; padding: 44px 20px 60px; }
     .city-panel { display: none; }
     .city-panel.active { display: block; }
 
-    /* City header */
-    .city-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .city-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 46px;
-      font-weight: 700;
-    }
-    .city-dates {
-      font-size: 15px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
+    .city-header { text-align: center; margin-bottom: 40px; }
+    .city-name { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; }
+    .city-dates { font-size: 15px; color: var(--text-muted); margin-top: 6px; }
     .city-stay {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--peach);
-      color: var(--orange);
-      padding: 6px 16px;
-      border-radius: 100px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-top: 14px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--peach); color: var(--orange);
+      padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; margin-top: 14px;
     }
 
     /* ─── DAY CARD ─── */
     .day-card {
-      background: var(--white);
-      border-radius: 22px;
-      margin-bottom: 22px;
-      overflow: hidden;
-      box-shadow: 0 2px 20px var(--shadow);
-      opacity: 0;
-      transform: translateY(18px);
+      background: var(--white); border-radius: 22px; margin-bottom: 22px;
+      overflow: hidden; box-shadow: 0 2px 20px var(--shadow);
+      opacity: 0; transform: translateY(18px);
       transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.25s;
     }
-    .day-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .day-card:hover {
-      box-shadow: 0 8px 36px rgba(44,26,14,0.11);
-    }
+    .day-card.visible { opacity: 1; transform: translateY(0); }
+    .day-card:hover { box-shadow: 0 8px 36px rgba(44,26,14,0.11); }
 
-    /* Birthday card overrides */
     .day-card.bday {
       background: linear-gradient(135deg, #FFFBEE 0%, #FFF0F5 100%);
       border: 2px solid #F5C842;
@@ -281,142 +209,63 @@
     }
 
     .day-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 20px 26px;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 26px; border-bottom: 1px solid var(--border);
     }
     .day-card.bday .day-header {
-      background: linear-gradient(135deg,
-        rgba(245,166,35,0.10) 0%,
-        rgba(232,82,122,0.06) 100%);
+      background: linear-gradient(135deg, rgba(245,166,35,0.10) 0%, rgba(232,82,122,0.06) 100%);
       border-bottom-color: rgba(245,166,35,0.3);
     }
-
     .day-num-box {
-      width: 54px;
-      height: 54px;
-      border-radius: 16px;
+      width: 54px; height: 54px; border-radius: 16px;
       background: linear-gradient(135deg, var(--orange), var(--coral));
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      flex-shrink: 0; color: #fff;
     }
-    .day-card.bday .day-num-box {
-      background: linear-gradient(135deg, #F5A623, #F5C842);
-    }
+    .day-card.bday .day-num-box { background: linear-gradient(135deg, #F5A623, #F5C842); }
     .day-num-box .num { font-size: 21px; font-weight: 700; line-height: 1; }
     .day-num-box .mon { font-size: 10px; opacity: 0.82; letter-spacing: 1px; text-transform: uppercase; }
-
     .day-meta { flex: 1; min-width: 0; }
-    .day-title {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .day-title { font-size: 17px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .day-card.bday .day-title { color: #9A6F00; }
     .day-loc { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
-
     .bday-chip {
-      flex-shrink: 0;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #F5A623, #F5C842);
-      color: #fff;
-      padding: 5px 12px;
-      border-radius: 100px;
+      flex-shrink: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      background: linear-gradient(135deg, #F5A623, #F5C842); color: #fff;
+      padding: 5px 12px; border-radius: 100px;
     }
 
     /* ─── ACTIVITIES ─── */
     .activities { padding: 4px 0; }
-
     .act {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 14px 26px;
-      border-bottom: 1px solid rgba(244,98,42,0.07);
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 14px 26px; border-bottom: 1px solid rgba(244,98,42,0.07);
       transition: background 0.2s;
     }
     .act:last-child { border-bottom: none; }
     .act:hover { background: rgba(244,98,42,0.025); }
-
-    .act-icon {
-      font-size: 22px;
-      width: 34px;
-      text-align: center;
-      flex-shrink: 0;
-      padding-top: 1px;
-    }
-
+    .act-icon { font-size: 22px; width: 34px; text-align: center; flex-shrink: 0; padding-top: 1px; }
     .act-body { flex: 1; min-width: 0; }
-
-    .act-top {
-      display: flex;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .act-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .act-time {
-      margin-left: auto;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--orange);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
+    .act-top { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+    .act-name { font-size: 15px; font-weight: 500; color: var(--text); }
+    .act-time { margin-left: auto; font-size: 13px; font-weight: 600; color: var(--orange); white-space: nowrap; flex-shrink: 0; }
     .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
-
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 100px;
+      display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600;
+      padding: 3px 9px; border-radius: 100px;
     }
     .badge.booked { background: var(--booked-bg); color: var(--booked-fg); }
     .badge.tbd    { background: var(--tbd-bg);    color: var(--tbd-fg); }
     .badge.note   { background: rgba(244,98,42,0.09); color: var(--orange); }
     .badge.warn   { background: rgba(231,76,60,0.10); color: #C0392B; }
-
-    .act-note {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 5px;
-      line-height: 1.6;
-    }
+    .act-note { font-size: 13px; color: var(--text-muted); margin-top: 5px; line-height: 1.6; }
 
     /* ─── TRANSITION BANNER ─── */
     .move-banner {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, #FFF5EF, #FFF1F7);
-      border: 1px dashed var(--coral);
-      border-radius: 16px;
-      margin-bottom: 22px;
-      opacity: 0;
-      transform: translateY(14px);
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px; background: linear-gradient(135deg, #FFF5EF, #FFF1F7);
+      border: 1px dashed var(--coral); border-radius: 16px; margin-bottom: 22px;
+      opacity: 0; transform: translateY(14px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     .move-banner.visible { opacity: 1; transform: translateY(0); }
@@ -426,64 +275,118 @@
 
     /* ─── BIRTHDAY HERO ─── */
     .bday-hero {
-      text-align: center;
-      padding: 48px 24px 40px;
+      text-align: center; padding: 48px 24px 40px;
       background: linear-gradient(135deg, #FFF6DA 0%, #FFE8F2 100%);
-      border-radius: 22px;
-      margin-bottom: 22px;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(18px);
+      border-radius: 22px; margin-bottom: 22px;
+      position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(18px);
       transition: opacity 0.55s ease, transform 0.55s ease;
     }
     .bday-hero.visible { opacity: 1; transform: translateY(0); }
     .bday-hero::before {
       content: '🎉 🎊 🎈 🎉 🎊 🎈 🎉 🎊 🎈 🎉 🎊 🎈';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      padding: 10px;
-      font-size: 20px;
-      letter-spacing: 6px;
-      opacity: 0.25;
-      pointer-events: none;
+      position: absolute; top: 0; left: 0; right: 0;
+      padding: 10px; font-size: 20px; letter-spacing: 6px; opacity: 0.25; pointer-events: none;
     }
-
-    .bday-emoji {
-      font-size: 64px;
-      display: block;
-      animation: floatBob 3s ease-in-out infinite;
-    }
-    @keyframes floatBob {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-12px); }
-    }
-
+    .bday-emoji { font-size: 64px; display: block; animation: floatBob 3s ease-in-out infinite; }
+    @keyframes floatBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     .bday-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 6vw, 52px);
-      font-weight: 700;
+      font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 52px); font-weight: 700;
       background: linear-gradient(135deg, #D4930A, var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-top: 14px;
     }
-    .bday-sub {
-      font-size: 16px;
-      color: var(--text-muted);
-      margin-top: 10px;
+    .bday-sub { font-size: 16px; color: var(--text-muted); margin-top: 10px; }
+
+    /* ─── WISHES SECTION ─── */
+    .wishes-section {
+      background: linear-gradient(135deg, #FFF5EF 0%, #FFF1F8 100%);
+      padding: 70px 20px 90px;
+      border-top: 1px solid var(--border);
+    }
+    .wishes-inner { max-width: 960px; margin: 0 auto; }
+    .wishes-heading { text-align: center; margin-bottom: 44px; }
+    .wishes-heading h2 {
+      font-family: 'Playfair Display', serif; font-size: 40px; font-weight: 700; color: var(--text);
+    }
+    .wishes-heading p { color: var(--text-muted); font-size: 16px; margin-top: 10px; }
+
+    /* Firebase setup notice */
+    .firebase-notice {
+      background: #FFF8E1; border: 1.5px dashed #F5A623; border-radius: 14px;
+      padding: 20px 24px; margin-bottom: 32px; font-size: 13px; color: #7A5C48; line-height: 1.7;
+    }
+    .firebase-notice strong { color: var(--orange); }
+    .firebase-notice code {
+      background: rgba(244,98,42,0.1); padding: 1px 6px; border-radius: 4px;
+      font-family: monospace; font-size: 12px;
+    }
+    .firebase-notice.hidden { display: none; }
+
+    /* Wish form */
+    .wish-form {
+      background: var(--white); border-radius: 20px; padding: 32px;
+      box-shadow: 0 2px 24px var(--shadow); max-width: 600px; margin: 0 auto 52px;
+    }
+    .wish-form-title {
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+      color: var(--text); margin-bottom: 24px; text-align: center;
+    }
+    .wish-field { margin-bottom: 16px; }
+    .wish-field label {
+      display: block; font-size: 12px; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px;
+    }
+    .wish-field input, .wish-field textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text);
+      background: var(--cream); outline: none; transition: border-color 0.2s;
+    }
+    .wish-field input:focus, .wish-field textarea:focus { border-color: var(--orange); background: #fff; }
+    .wish-field textarea { min-height: 110px; resize: vertical; }
+    .wish-submit {
+      width: 100%; padding: 15px; margin-top: 4px;
+      background: linear-gradient(135deg, var(--orange), var(--coral));
+      color: #fff; border: none; border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: opacity 0.2s, transform 0.2s;
+    }
+    .wish-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .wish-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+    .wish-success {
+      display: none; text-align: center; padding: 14px;
+      background: rgba(39,174,96,0.10); border-radius: 12px;
+      color: var(--booked-fg); font-weight: 500; font-size: 14px; margin-top: 12px;
     }
 
-    /* ─── FOOTER ─── */
-    .footer {
-      text-align: center;
-      padding: 40px 20px 60px;
-      font-size: 13px;
-      color: var(--text-muted);
+    /* Wishes grid */
+    .wishes-grid-label {
+      font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700;
+      color: var(--text); text-align: center; margin-bottom: 24px;
     }
+    .wishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .wish-card {
+      background: var(--white); border-radius: 16px; padding: 22px;
+      box-shadow: 0 2px 16px var(--shadow);
+      animation: fadeUp 0.5s ease both;
+      border-left: 4px solid var(--peach);
+    }
+    .wish-card:nth-child(3n+1) { border-left-color: var(--coral); }
+    .wish-card:nth-child(3n+2) { border-left-color: var(--pink); }
+    .wish-card:nth-child(3n)   { border-left-color: var(--gold); }
+    .wish-card-name { font-weight: 700; font-size: 15px; color: var(--orange); margin-bottom: 8px; }
+    .wish-card-msg  { font-size: 14px; color: var(--text); line-height: 1.65; }
+    .wish-card-time { font-size: 11px; color: var(--text-muted); margin-top: 12px; }
+    .wishes-empty   { text-align: center; color: var(--text-muted); padding: 48px 20px; font-size: 15px; }
+    .wishes-loading { text-align: center; color: var(--text-muted); padding: 32px 20px; font-size: 14px; }
+
+    /* ─── FOOTER ─── */
+    .footer { text-align: center; padding: 40px 20px 60px; font-size: 13px; color: var(--text-muted); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 600px) {
@@ -492,6 +395,8 @@
       .act { padding: 12px 18px; }
       .day-title { font-size: 15px; }
       .bday-chip { display: none; }
+      .hero-actions { flex-direction: column; align-items: center; }
+      .wish-form { padding: 24px 18px; }
     }
   </style>
 </head>
@@ -501,24 +406,35 @@
 
 <!-- ═══════════════════════════════════════
      HERO
+     NOTE: hero background uses family.jpg —
+     upload both index.html AND family.jpg to GitHub
 ═══════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-stars" id="hero-stars"></div>
 
-  <p class="hero-eyebrow">A family celebration · May 2026</p>
-  <h1 class="hero-title">Rmody 60</h1>
-  <p class="hero-sub">California Adventure</p>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A family celebration · May 2026</p>
+    <h1 class="hero-title">Roopal Turns 60!</h1>
+    <p class="hero-sub">California Adventure</p>
 
-  <div class="hero-dates">
-    <span>May 21</span>
-    <span class="sep"></span>
-    <span>May 31, 2026</span>
-  </div>
+    <div class="hero-dates">
+      <span>May 21</span>
+      <span class="sep"></span>
+      <span>May 31, 2026</span>
+    </div>
 
-  <div class="hero-chips">
-    <span class="hero-chip">🌴 Los Angeles</span>
-    <span class="hero-chip">🌊 San Diego</span>
-    <span class="hero-chip">🍷 Santa Barbara</span>
+    <!-- Action buttons -->
+    <div class="hero-actions">
+      <button class="hero-btn hero-btn-today" onclick="goToToday()">📅 Take me to today</button>
+      <button class="hero-btn hero-btn-wish"  onclick="goToWishes()">💌 Share a Wish or Travel Tip</button>
+    </div>
+
+    <!-- Clickable city chips -->
+    <div class="hero-chips">
+      <span class="hero-chip" onclick="goToCity('la')">🌴 Los Angeles</span>
+      <span class="hero-chip" onclick="goToCity('sd')">🌊 San Diego</span>
+      <span class="hero-chip" onclick="goToCity('sb')">🍷 Santa Barbara</span>
+    </div>
   </div>
 
   <div class="scroll-hint">
@@ -540,9 +456,9 @@
 ═══════════════════════════════════════ -->
 <nav class="sticky-nav">
   <div class="nav-inner">
-    <div class="nav-tab active" data-city="la"  onclick="switchCity('la')">🌴 Los Angeles</div>
-    <div class="nav-tab"        data-city="sd"  onclick="switchCity('sd')">🌊 San Diego</div>
-    <div class="nav-tab"        data-city="sb"  onclick="switchCity('sb')">🍷 Santa Barbara</div>
+    <div class="nav-tab active" data-city="la" onclick="switchCity('la')">🌴 Los Angeles</div>
+    <div class="nav-tab"        data-city="sd" onclick="switchCity('sd')">🌊 San Diego</div>
+    <div class="nav-tab"        data-city="sb" onclick="switchCity('sb')">🍷 Santa Barbara</div>
   </div>
 </nav>
 
@@ -551,9 +467,7 @@
 ═══════════════════════════════════════ -->
 <div class="content">
 
-  <!-- ══════════════════
-       LOS ANGELES
-  ══════════════════ -->
+  <!-- ══════════════════  LOS ANGELES  ══════════════════ -->
   <div class="city-panel active" id="panel-la">
     <div class="city-header">
       <div class="city-name">Los Angeles 🌴</div>
@@ -562,7 +476,7 @@
     </div>
 
     <!-- May 21 -->
-    <div class="day-card">
+    <div class="day-card" id="day-21">
       <div class="day-header">
         <div class="day-num-box"><span class="num">21</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -582,7 +496,7 @@
     </div>
 
     <!-- May 22 -->
-    <div class="day-card">
+    <div class="day-card" id="day-22">
       <div class="day-header">
         <div class="day-num-box"><span class="num">22</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -628,8 +542,8 @@
       </div>
     </div>
 
-    <!-- May 23 (LA portion) -->
-    <div class="day-card">
+    <!-- May 23 LA -->
+    <div class="day-card" id="day-23">
       <div class="day-header">
         <div class="day-num-box"><span class="num">23</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -665,7 +579,7 @@
           <div class="act-icon">🚗</div>
           <div class="act-body">
             <div class="act-top"><span class="act-name">Drive to San Diego</span></div>
-            <div class="act-note">~2–3 hours depending on traffic. Leave early to beat it! Option to take the scenic coastal route and stop for dinner along the way, or arrive in SD and eat there.</div>
+            <div class="act-note">~2–3 hours depending on traffic. Leave early to beat it! Option to take the scenic coastal route.</div>
           </div>
         </div>
       </div>
@@ -680,8 +594,8 @@
       </div>
     </div>
 
-    <!-- May 29 -->
-    <div class="day-card">
+    <!-- May 29 LA -->
+    <div class="day-card" id="day-29la">
       <div class="day-header">
         <div class="day-num-box"><span class="num">29</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -735,8 +649,8 @@
       <div class="bday-sub">The whole trip has been building to this. Today is yours. 🥂</div>
     </div>
 
-    <!-- May 30 — BIRTHDAY -->
-    <div class="day-card bday" id="bday-card">
+    <!-- May 30 BIRTHDAY -->
+    <div class="day-card bday" id="day-30">
       <div class="day-header">
         <div class="day-num-box"><span class="num">30</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -774,7 +688,7 @@
           <div class="act-icon">🚗</div>
           <div class="act-body">
             <div class="act-top"><span class="act-name">Beverly Hills Drive &amp; Greystone Mansion</span></div>
-            <div class="act-note">Scenic drive through the hills. Stop at the gorgeous Greystone Mansion &amp; Gardens (free entry). Options: Mulholland Drive for the best views, Benedict Canyon for "old LA" mansion vibes, Canon Drive for leafy charm.</div>
+            <div class="act-note">Scenic drive through the hills. Stop at the gorgeous Greystone Mansion &amp; Gardens (free entry). Options: Mulholland Drive for the best views, Benedict Canyon for "old LA" mansion vibes.</div>
           </div>
         </div>
         <div class="act">
@@ -803,7 +717,7 @@
     </div>
 
     <!-- May 31 -->
-    <div class="day-card">
+    <div class="day-card" id="day-31">
       <div class="day-header">
         <div class="day-num-box"><span class="num">31</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -832,7 +746,7 @@
         <div class="act">
           <div class="act-icon">✈️</div>
           <div class="act-body">
-            <div class="act-top"><span class="act-name">Fly home to New York</span></div>
+            <div class="act-top"><span class="act-name">Fly to Philly to see the Gandhis and continue the adventure!</span></div>
             <div class="act-note">Until next time, California 🌅</div>
           </div>
         </div>
@@ -841,9 +755,7 @@
   </div><!-- /panel-la -->
 
 
-  <!-- ══════════════════
-       SAN DIEGO
-  ══════════════════ -->
+  <!-- ══════════════════  SAN DIEGO  ══════════════════ -->
   <div class="city-panel" id="panel-sd">
     <div class="city-header">
       <div class="city-name">San Diego 🌊</div>
@@ -851,8 +763,8 @@
       <div><span class="city-stay">🏨 Alma Hotel</span></div>
     </div>
 
-    <!-- May 23 (SD arrival) -->
-    <div class="day-card">
+    <!-- May 23 SD arrival -->
+    <div class="day-card" id="day-23sd">
       <div class="day-header">
         <div class="day-num-box"><span class="num">23</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -911,7 +823,7 @@
     </div>
 
     <!-- May 24 -->
-    <div class="day-card">
+    <div class="day-card" id="day-24">
       <div class="day-header">
         <div class="day-num-box"><span class="num">24</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -976,7 +888,7 @@
     </div>
 
     <!-- May 25 -->
-    <div class="day-card">
+    <div class="day-card" id="day-25">
       <div class="day-header">
         <div class="day-num-box"><span class="num">25</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1039,8 +951,8 @@
       </div>
     </div>
 
-    <!-- May 26 — drive day (SD morning) -->
-    <div class="day-card">
+    <!-- May 26 SD departure morning -->
+    <div class="day-card" id="day-26sd">
       <div class="day-header">
         <div class="day-num-box"><span class="num">26</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1069,9 +981,7 @@
   </div><!-- /panel-sd -->
 
 
-  <!-- ══════════════════
-       SANTA BARBARA
-  ══════════════════ -->
+  <!-- ══════════════════  SANTA BARBARA  ══════════════════ -->
   <div class="city-panel" id="panel-sb">
     <div class="city-header">
       <div class="city-name">Santa Barbara 🍷</div>
@@ -1079,8 +989,8 @@
       <div><span class="city-stay">🏡 Private Airbnb</span></div>
     </div>
 
-    <!-- May 26 (SB arrival) -->
-    <div class="day-card">
+    <!-- May 26 SB arrival -->
+    <div class="day-card" id="day-26sb">
       <div class="day-header">
         <div class="day-num-box"><span class="num">26</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1114,7 +1024,7 @@
     </div>
 
     <!-- May 27 -->
-    <div class="day-card">
+    <div class="day-card" id="day-27">
       <div class="day-header">
         <div class="day-num-box"><span class="num">27</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1170,7 +1080,7 @@
     </div>
 
     <!-- May 28 -->
-    <div class="day-card">
+    <div class="day-card" id="day-28">
       <div class="day-header">
         <div class="day-num-box"><span class="num">28</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1237,7 +1147,7 @@
     </div>
 
     <!-- May 29 SB departure -->
-    <div class="day-card">
+    <div class="day-card" id="day-29sb">
       <div class="day-header">
         <div class="day-num-box"><span class="num">29</span><span class="mon">May</span></div>
         <div class="day-meta">
@@ -1267,51 +1177,262 @@
 
 </div><!-- /content -->
 
+
+<!-- ═══════════════════════════════════════
+     WISHES & TRAVEL TIPS
+═══════════════════════════════════════ -->
+<section class="wishes-section" id="wishes-section">
+  <div class="wishes-inner">
+
+    <div class="wishes-heading">
+      <h2>Wishes &amp; Travel Tips 💌</h2>
+      <p>Share a birthday wish for Roopal, or a tip for the trip!</p>
+    </div>
+
+    <!--
+    ══════════════════════════════════════════════════════
+    FIREBASE SETUP — do this once before sharing the site:
+
+    1. Go to https://console.firebase.google.com
+    2. Click "Add project" → name it rmody60 → Continue
+    3. Disable Google Analytics (optional) → Create project
+    4. Click the </> (Web) icon → Register app → name it rmody60
+    5. Copy the firebaseConfig object from the snippet shown
+    6. Paste it below, replacing the placeholder values
+    7. In the left sidebar go to Build → Firestore Database
+    8. Click "Create database" → Start in test mode → Next → Enable
+    9. That's it! The wishes feature will be live.
+    ══════════════════════════════════════════════════════
+    -->
+    <div class="firebase-notice" id="firebase-notice">
+      <strong>⚙️ One-time setup needed to activate wishes:</strong><br>
+      Arnav — paste your Firebase config into the <code>firebaseConfig</code> object in the HTML source,
+      then delete this notice box. Takes ~5 minutes.
+      Instructions are in the HTML comments above <code>id="wishes-section"</code>.
+    </div>
+
+    <!-- Wish submission form -->
+    <div class="wish-form">
+      <div class="wish-form-title">Leave a message 🌟</div>
+      <div class="wish-field">
+        <label for="wish-name">Your name</label>
+        <input type="text" id="wish-name" placeholder="e.g. Priya" maxlength="60" />
+      </div>
+      <div class="wish-field">
+        <label for="wish-msg">Your wish or travel tip</label>
+        <textarea id="wish-msg" placeholder="Happy birthday Roopal! Don't miss the sunset from Stearns Wharf…" maxlength="500"></textarea>
+      </div>
+      <button class="wish-submit" id="wish-submit" onclick="submitWish()">Send it ✨</button>
+      <div class="wish-success" id="wish-success">🎉 Thank you! Your message is now on the board.</div>
+    </div>
+
+    <!-- Wishes display -->
+    <div class="wishes-grid-label">From everyone who loves you 🧡</div>
+    <div id="wishes-loading" class="wishes-loading">Loading messages…</div>
+    <div id="wishes-grid" class="wishes-grid"></div>
+    <div id="wishes-empty" class="wishes-empty" style="display:none">
+      No messages yet — be the first! 🌟
+    </div>
+
+  </div>
+</section>
+
 <div class="footer">
   Made with ❤️ for Roopal's 60th &nbsp;·&nbsp; California, May 2026
 </div>
 
 
+<!-- ═══════════════════════════════════════
+     FIREBASE SDK
+═══════════════════════════════════════ -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
 <script>
+// ══════════════════════════════════════════════
+// FIREBASE CONFIG — paste your values here
+// ══════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "YOUR_API_KEY",
+  authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId:         "YOUR_PROJECT_ID",
+  storageBucket:     "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId:             "YOUR_APP_ID"
+};
+
+// Detect whether Firebase has been configured
+const FIREBASE_READY = firebaseConfig.apiKey !== "YOUR_API_KEY";
+
+let db = null;
+if (FIREBASE_READY) {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  document.getElementById('firebase-notice').classList.add('hidden');
+  loadWishes();
+} else {
+  document.getElementById('wishes-loading').style.display = 'none';
+  document.getElementById('wishes-empty').style.display   = 'block';
+}
+
+// ─── SUBMIT WISH ───
+function submitWish() {
+  const name = document.getElementById('wish-name').value.trim();
+  const msg  = document.getElementById('wish-msg').value.trim();
+  if (!name) { document.getElementById('wish-name').focus(); return; }
+  if (!msg)  { document.getElementById('wish-msg').focus();  return; }
+
+  if (!FIREBASE_READY) {
+    alert('Firebase not yet configured — see setup instructions.');
+    return;
+  }
+
+  const btn = document.getElementById('wish-submit');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  db.collection('wishes').add({
+    name:      name,
+    message:   msg,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    document.getElementById('wish-name').value = '';
+    document.getElementById('wish-msg').value  = '';
+    const s = document.getElementById('wish-success');
+    s.style.display = 'block';
+    setTimeout(() => { s.style.display = 'none'; }, 4000);
+  }).catch(err => {
+    alert('Oops, something went wrong. Try again!');
+    console.error(err);
+  }).finally(() => {
+    btn.disabled    = false;
+    btn.textContent = 'Send it ✨';
+  });
+}
+
+// ─── LOAD WISHES (live) ───
+function loadWishes() {
+  const grid    = document.getElementById('wishes-grid');
+  const empty   = document.getElementById('wishes-empty');
+  const loading = document.getElementById('wishes-loading');
+
+  db.collection('wishes')
+    .orderBy('timestamp', 'desc')
+    .onSnapshot(snapshot => {
+      loading.style.display = 'none';
+      grid.innerHTML = '';
+      if (snapshot.empty) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const ts = d.timestamp ? d.timestamp.toDate() : new Date();
+        const dateStr = ts.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const card = document.createElement('div');
+        card.className = 'wish-card';
+        card.innerHTML = `
+          <div class="wish-card-name">${escHtml(d.name)}</div>
+          <div class="wish-card-msg">${escHtml(d.message)}</div>
+          <div class="wish-card-time">${dateStr}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }, err => {
+      loading.textContent = 'Could not load messages.';
+      console.error(err);
+    });
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/\n/g,'<br>');
+}
+
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+
 // ─── HERO STARS ───
 (function() {
-  const container = document.getElementById('hero-stars');
+  const c = document.getElementById('hero-stars');
   for (let i = 0; i < 55; i++) {
     const s = document.createElement('span');
-    const size = Math.random() * 3 + 1;
-    s.style.cssText = `
-      width:${size}px; height:${size}px;
-      top:${Math.random()*100}%;
-      left:${Math.random()*100}%;
-      --d:${(Math.random()*3+2).toFixed(1)}s;
-      --delay:${(Math.random()*4).toFixed(1)}s;
-    `;
-    container.appendChild(s);
+    const sz = Math.random() * 3 + 1;
+    s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s;`;
+    c.appendChild(s);
   }
 })();
 
-// ─── CITY TAB SWITCHING ───
+// ─── SWITCH CITY TAB ───
 function switchCity(city) {
   document.querySelectorAll('.city-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + city).classList.add('active');
   document.querySelector('[data-city="' + city + '"]').classList.add('active');
-
-  // Scroll to nav
   const nav = document.querySelector('.sticky-nav');
-  const navTop = nav.getBoundingClientRect().top + window.scrollY - 1;
-  window.scrollTo({ top: navTop, behavior: 'smooth' });
-
-  // Re-trigger animations for newly visible cards
+  window.scrollTo({ top: nav.getBoundingClientRect().top + window.scrollY - 1, behavior: 'smooth' });
   requestAnimationFrame(() => observeCards());
-
-  // Check bday visibility if on LA panel
-  if (city === 'la') {
-    setTimeout(checkBdayVisible, 600);
-  }
+  if (city === 'la') setTimeout(checkBdayVisible, 600);
 }
 
-// ─── SCROLL ANIMATIONS ───
+// ─── GO TO CITY (from hero chips) ───
+function goToCity(city) {
+  switchCity(city);
+}
+
+// ─── GO TO TODAY ───
+function goToToday() {
+  // Map each trip date to { city tab, day card id }
+  const dayMap = {
+    '2026-05-21': { city: 'la', id: 'day-21'   },
+    '2026-05-22': { city: 'la', id: 'day-22'   },
+    '2026-05-23': { city: 'la', id: 'day-23'   },
+    '2026-05-24': { city: 'sd', id: 'day-24'   },
+    '2026-05-25': { city: 'sd', id: 'day-25'   },
+    '2026-05-26': { city: 'sd', id: 'day-26sd' },
+    '2026-05-27': { city: 'sb', id: 'day-27'   },
+    '2026-05-28': { city: 'sb', id: 'day-28'   },
+    '2026-05-29': { city: 'sb', id: 'day-29sb' },
+    '2026-05-30': { city: 'la', id: 'day-30'   },
+    '2026-05-31': { city: 'la', id: 'day-31'   },
+  };
+
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const key = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const entry = dayMap[key];
+
+  if (!entry) {
+    const tripStart = new Date('2026-05-21');
+    const tripEnd   = new Date('2026-05-31');
+    if (now < tripStart) {
+      const days = Math.ceil((tripStart - now) / 86400000);
+      alert(`The adventure begins in ${days} day${days !== 1 ? 's' : ''}! 🌅`);
+    } else {
+      alert('What an incredible trip! The memories last forever. 🌟');
+    }
+    return;
+  }
+
+  switchCity(entry.city);
+  setTimeout(() => {
+    const el = document.getElementById(entry.id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 500);
+}
+
+// ─── GO TO WISHES SECTION ───
+function goToWishes() {
+  document.getElementById('wishes-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+
+// ══════════════════════════════════════════════
+// SCROLL ANIMATIONS
+// ══════════════════════════════════════════════
 function observeCards() {
   const items = document.querySelectorAll(
     '.city-panel.active .day-card, .city-panel.active .move-banner, .city-panel.active .bday-hero'
@@ -1328,110 +1449,76 @@ function observeCards() {
 
 const scrollObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      scrollObserver.unobserve(entry.target);
-    }
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); scrollObserver.unobserve(entry.target); }
   });
 }, { rootMargin: '0px 0px -40px 0px' });
 
-function attachObserver() {
-  document.querySelectorAll('.day-card, .move-banner, .bday-hero').forEach(el => {
-    scrollObserver.observe(el);
-  });
-}
-attachObserver();
+document.querySelectorAll('.day-card, .move-banner, .bday-hero').forEach(el => scrollObserver.observe(el));
 
-// ─── CONFETTI ───
+
+// ══════════════════════════════════════════════
+// CONFETTI
+// ══════════════════════════════════════════════
 const canvas = document.getElementById('confetti-canvas');
-const ctx = canvas.getContext('2d');
+const ctx    = canvas.getContext('2d');
 let W = canvas.width  = window.innerWidth;
 let H = canvas.height = window.innerHeight;
-window.addEventListener('resize', () => {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-});
+window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
 
 const COLORS = ['#F4622A','#F5A623','#E8527A','#8B4FC8','#27AE60','#FFD700','#F4845F','#5B9CF6'];
-let pieces = [];
-let animId = null;
-let confettiFired = false;
+let pieces = [], animId = null, confettiFired = false;
 
 function spawnConfetti() {
   for (let i = 0; i < 180; i++) {
     pieces.push({
-      x:     Math.random() * W,
-      y:     -10 - Math.random() * 120,
-      w:     Math.random() * 10 + 4,
-      h:     Math.random() * 5  + 3,
-      color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      vy:    Math.random() * 3.5 + 1.5,
-      vx:    (Math.random() - 0.5) * 2.5,
-      angle: Math.random() * Math.PI * 2,
-      spin:  (Math.random() - 0.5) * 0.18,
-      alpha: 1,
+      x: Math.random()*W, y: -10 - Math.random()*120,
+      w: Math.random()*10+4, h: Math.random()*5+3,
+      color: COLORS[Math.floor(Math.random()*COLORS.length)],
+      vy: Math.random()*3.5+1.5, vx: (Math.random()-0.5)*2.5,
+      angle: Math.random()*Math.PI*2, spin: (Math.random()-0.5)*0.18, alpha: 1,
     });
   }
 }
 
 function drawConfetti() {
-  ctx.clearRect(0, 0, W, H);
+  ctx.clearRect(0,0,W,H);
   let alive = false;
   pieces.forEach(p => {
-    p.y     += p.vy;
-    p.x     += p.vx;
-    p.angle += p.spin;
-    if (p.y > H * 0.7) p.alpha -= 0.018;
-    if (p.alpha <= 0 || p.y > H + 20) return;
+    p.y += p.vy; p.x += p.vx; p.angle += p.spin;
+    if (p.y > H*0.7) p.alpha -= 0.018;
+    if (p.alpha <= 0 || p.y > H+20) return;
     alive = true;
-    ctx.save();
-    ctx.globalAlpha = Math.max(0, p.alpha);
-    ctx.translate(p.x, p.y);
-    ctx.rotate(p.angle);
-    ctx.fillStyle = p.color;
-    ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+    ctx.save(); ctx.globalAlpha = Math.max(0,p.alpha);
+    ctx.translate(p.x,p.y); ctx.rotate(p.angle);
+    ctx.fillStyle = p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
     ctx.restore();
   });
-  pieces = pieces.filter(p => p.alpha > 0 && p.y < H + 20);
-  if (alive) {
-    animId = requestAnimationFrame(drawConfetti);
-  } else {
-    ctx.clearRect(0, 0, W, H);
-    animId = null;
-  }
+  pieces = pieces.filter(p => p.alpha > 0 && p.y < H+20);
+  if (alive) { animId = requestAnimationFrame(drawConfetti); }
+  else { ctx.clearRect(0,0,W,H); animId = null; }
 }
 
 function fireConfetti() {
   if (confettiFired) return;
   confettiFired = true;
-  spawnConfetti();
-  if (!animId) drawConfetti();
-  // Second burst after a moment
-  setTimeout(() => { spawnConfetti(); }, 800);
+  spawnConfetti(); drawConfetti();
+  setTimeout(spawnConfetti, 800);
 }
 
 function checkBdayVisible() {
   if (confettiFired) return;
   const hero = document.getElementById('bday-hero');
   if (!hero) return;
-  const rect = hero.getBoundingClientRect();
-  if (rect.top < window.innerHeight && rect.bottom > 0) {
-    fireConfetti();
-  }
+  const r = hero.getBoundingClientRect();
+  if (r.top < window.innerHeight && r.bottom > 0) fireConfetti();
 }
 
 window.addEventListener('scroll', () => {
   observeCards();
-  if (document.getElementById('panel-la').classList.contains('active')) {
-    checkBdayVisible();
-  }
+  if (document.getElementById('panel-la').classList.contains('active')) checkBdayVisible();
 }, { passive: true });
 
-// Initial check on load
-setTimeout(() => {
-  observeCards();
-  checkBdayVisible();
-}, 300);
+setTimeout(() => { observeCards(); checkBdayVisible(); }, 300);
 </script>
 </body>
 </html>
